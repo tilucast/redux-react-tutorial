@@ -14,10 +14,15 @@ const postsSlice = createSlice({
         },
         deleteAPost(state, action){
             state.splice(action.payload.index, 1)
+        },
+        updateAPost(state, {payload: {id, title, content}}){
+            const post = state.find(postId => id === postId)
+            post.title = title
+            post.content = content
         }
     }
 })
 
-export const {addAPost, deleteAPost} = postsSlice.actions
+export const {addAPost, deleteAPost, updateAPost} = postsSlice.actions
 
 export default postsSlice.reducer
