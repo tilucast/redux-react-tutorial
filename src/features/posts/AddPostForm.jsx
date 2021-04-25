@@ -1,23 +1,38 @@
+import { unwrapResult } from '@reduxjs/toolkit'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import {addAPost} from './postsSlice'
+import {createAPost} from './postsSlice'
 
 const AddPostForm = () => {
     const [title, setTitle] = useState('')
     const [content, setContent] = useState('')
     const [userId, setUserId] = useState('')
+    const [requestStatus, setRequestStatus] = useState('idle')
 
     const dispatch = useDispatch()
 
     const users = useSelector(state => state.users)
+    const canSave = 
+        [title, content, userId].every(Boolean) //!!title && !!content && !!userId
 
-    const savePost = (event) => {
+    const savePost = async (event) => {
         event.preventDefault()
 
-        dispatch(addAPost(title, content, userId))
+        if(canSave){
+            try{
+                setRequestStatus('pending')
+                const result = await dispatch(createAPost({title, content, user: userId}))
+                unwrapResult(result)
+                setTitle("")
+                setContent("")
+                setUserId("")
 
-        setTitle("")
-        setContent("")
+            }catch(error){
+                console.error(error);
+            } finally{
+                setRequestStatus('idle')
+            }
+        }
     }
 
     const usersOptions = users.map(user => {
@@ -27,8 +42,6 @@ const AddPostForm = () => {
             </option>
         )
     })
-
-    const canSave = !!title && !!content && !!userId
 
     return (
         <section>

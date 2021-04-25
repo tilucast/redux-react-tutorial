@@ -14,6 +14,7 @@ const PostsList = () => {
     const error = useSelector(state => state.posts.error)
 
     const deletePost = (index) => {
+        // not working because the mock api lib used here is pretty large and would require way to much reading to get it to work properly. 
         dispatch(
             deleteAPost({index})
         )

@@ -1,5 +1,4 @@
 import { createSlice, nanoid, createAsyncThunk } from '@reduxjs/toolkit'
-import {sub} from 'date-fns'
 import {client} from '../../api/client'
 
 const initialState = {
@@ -22,27 +21,33 @@ export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
     return response.posts
 })
 
+export const createAPost = createAsyncThunk('posts/createAPost', async postBody => {
+    const response = await client.post('/fakeApi/posts', {post: postBody})
+
+    return response.post
+})
+
 const postsSlice = createSlice({
     name: 'posts',
     initialState,
     reducers: {
-        addAPost: {
-            reducer(state, action){
-                state.posts.push(action.payload)
-            },
-            prepare(title, content, userId){
-                return {
-                    payload: {
-                        id: nanoid(),
-                        date: new Date().toISOString(),
-                        reactions: {thumbsUp: 0, hooray: 0, heart: 0, rocket: 0, eyes: 0},
-                        title,
-                        content,
-                        user: userId
-                    }
-                }
-            }
-        },
+        // addAPost: {
+        //     reducer(state, action){
+        //         state.posts.push(action.payload)
+        //     },
+        //     prepare(title, content, userId){
+        //         return {
+        //             payload: {
+        //                 id: nanoid(),
+        //                 date: new Date().toISOString(),
+        //                 reactions: {thumbsUp: 0, hooray: 0, heart: 0, rocket: 0, eyes: 0},
+        //                 title,
+        //                 content,
+        //                 user: userId
+        //             }
+        //         }
+        //     }
+        // },
         deleteAPost(state, action){
             state.posts.splice(action.payload.index, 1)
         },
@@ -68,6 +73,9 @@ const postsSlice = createSlice({
         [fetchPosts.rejected]: (state, action) => {
             state.status = 'failed'
             state.error = action.error.message
+        },
+        [createAPost.fulfilled]: (state, action) => {
+            state.posts.push(action.payload)
         }
     }
 })
