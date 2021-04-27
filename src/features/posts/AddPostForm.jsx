@@ -7,7 +7,7 @@ const AddPostForm = () => {
     const [title, setTitle] = useState('')
     const [content, setContent] = useState('')
     const [userId, setUserId] = useState('')
-    const [requestStatus, setRequestStatus] = useState('idle')
+    const [_, setRequestStatus] = useState('idle')
 
     const dispatch = useDispatch()
 

@@ -7,8 +7,8 @@ import TimeAgo from './TimeAgo'
 import ReactionButtons from './ReactionButtons'
 
 const PostsList = () => {
+    
     const dispatch = useDispatch()
-
     const posts = useSelector(selectAllPosts)
     const postStatus = useSelector(state => state.posts.status)
     const error = useSelector(state => state.posts.error)
