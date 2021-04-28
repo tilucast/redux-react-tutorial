@@ -9,7 +9,7 @@ import classnames from 'classnames'
 export const NotificationsList = () => {
 
     const dispatch = useDispatch()
-    const {notifications} = useSelector(selectAllNotifications)
+    const notifications = useSelector(selectAllNotifications)
     const notificationStatus = useSelector(state => state.notifications.status)
     const users = useSelector(selectAllUsers)
 

@@ -1,6 +1,7 @@
 import { unwrapResult } from '@reduxjs/toolkit'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { selectAllUsers } from '../users/usersSlice'
 import {createAPost} from './postsSlice'
 
 const AddPostForm = () => {
@@ -11,7 +12,7 @@ const AddPostForm = () => {
 
     const dispatch = useDispatch()
 
-    const users = useSelector(state => state.users)
+    const users = useSelector(selectAllUsers)
     const canSave = 
         [title, content, userId].every(Boolean) //!!title && !!content && !!userId
 

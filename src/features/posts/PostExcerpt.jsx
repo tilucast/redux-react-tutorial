@@ -9,6 +9,7 @@ import { selectPostById } from './postsSlice'
 let PostExcerpt = ({postId, deleteAPostFunction}) => {
 
     const post = useSelector(state => selectPostById(state, postId))
+    const postContent = post.content.length > 100 ? post.content.substring(0,100) + ' ...' : post.content
     
     return (
         <article className="post-excerpt">
@@ -19,7 +20,7 @@ let PostExcerpt = ({postId, deleteAPostFunction}) => {
                 <PostAuthor userId={post.user} />
                 <TimeAgo timestamp={post.date} />
             </div>
-            <p className="post-content">{post.content.substring(0,100) + '...'}</p>
+            <p className="post-content">{postContent}</p>
             <span onClick={() => deleteAPostFunction()}>X</span>
             <ReactionButtons post={post} />
         </article>

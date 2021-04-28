@@ -42,9 +42,9 @@ const postsSlice = createSlice({
         //         }
         //     }
         // },
-        deleteAPost(state, {payload: {postId}}){
+        deleteAPost(state, {payload: {id}}){
             //const actualPost = state.entities[postId]
-            postsAdapter.removeOne(state, postId)
+            postsAdapter.removeOne(state, id)
         },
         updateAPost(state, {payload: {id, title, content}}){
             //const post = state.posts.find(post => id === post.id)

@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import {deleteAPost, fetchPosts, selectAllPosts, selectPostIds} from '../posts/postsSlice'
+import {deleteAPost, fetchPosts, selectPostIds} from '../posts/postsSlice'
 import PostExcerpt from './PostExcerpt'
 
 const PostsList = () => {
 
     const dispatch = useDispatch()
-    //const posts = useSelector(selectPostIds)
     const orderedPostIds = useSelector(selectPostIds)
     const postStatus = useSelector(state => state.posts.status)
     const error = useSelector(state => state.posts.error)
@@ -29,8 +28,8 @@ const PostsList = () => {
     if(postStatus === 'loading'){
         content = <div className="loader">Loading ...</div>
     } else if(postStatus === 'succeeded'){
-        content = orderedPostIds.map((post) => (
-            <PostExcerpt postId={post} key={post} deleteAPostFunction={() => deletePost(post)}/>
+        content = orderedPostIds.map((postId) => (
+            <PostExcerpt postId={postId} key={postId} deleteAPostFunction={() => deletePost(postId)}/>
         ))
 
     } else if(postStatus === 'failed'){
