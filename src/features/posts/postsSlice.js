@@ -43,9 +43,8 @@ const postsSlice = createSlice({
         //     }
         // },
         deleteAPost(state, {payload: {postId}}){
-            const actualPost = state.entities[postId]
-            console.log(actualPost);
-            
+            //const actualPost = state.entities[postId]
+            postsAdapter.removeOne(state, postId)
         },
         updateAPost(state, {payload: {id, title, content}}){
             //const post = state.posts.find(post => id === post.id)
@@ -72,10 +71,7 @@ const postsSlice = createSlice({
             state.status = 'failed'
             state.error = action.error.message
         },
-        [createAPost.fulfilled]: (state, action) => {
-            postsAdapter.addOne
-            //state.posts.push(action.payload)
-        }
+        [createAPost.fulfilled]: postsAdapter.addOne
     }
 })
 
